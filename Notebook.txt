@@ -1,0 +1,59 @@
+-> jupyter notebook lecture :-
+
+import requests # Request the webpages
+from bs4 import BeautifulSoup as bs # To pass html content
+from selenium import webdriver # Automate browser
+# Web driver -> Handle chrome web browser
+from selenium.webdriver.common.by import By # By class is imported
+
+get method => loads a webpage into current browser session
+rawQuery => what is the string we are searching for
+html.parser =>  
+Initialise driver, ask driver open chrome, go to particular url, ask driver extract entire page source
+
+ctrl + shift + c => inspect page
+all products are in unordered list class result base
+fetch text of only first product
+find all => will find ul class named result base in the entire webpage
+pclass[0] => fetch entire webpage and only select 1st product
+
+for i in pclass:
+    href = i.find_all('a', href = True) => find all the anchor tags
+    t = (href[0]['href']) => only 1st product
+"https://www.myntra.com/" + t => storing the url link
+a => anchor tag => contains the hyperlink reference url of the product
+
+getting to product link and opening the one single product
+
+extracting the title by inspect webpage
+
+prodRes_html.findAll("div", {"class" : "index-overallRating"}) => 
+find all div with class name index-overallRating 
+
+we only need 4.1 data and discard all others so we use for loop
+i.find the div as a text and then print
+
+find all span with class name pdp-price 
+
+we only need 1246 data and discard all others so we use for loop
+i the span as a text and then print
+
+
+without only single review we will go to the all detailed reviews page
+find specific anchor tag with class name detailed-reviews-allReviews
+
+t2 = Reviews['href'] => copying the href text from Reviews to t2
+Review_link = 'https://www.myntra.com' + t2 => and creating a customised url of the review page
+
+get to the review_link and open the driver page source
+
+driver.quit() => close the application
+
+
+
+
+
+
+
+
+
