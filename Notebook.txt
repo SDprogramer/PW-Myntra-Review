@@ -49,9 +49,67 @@ get to the review_link and open the driver page source
 
 driver.quit() => close the application
 
+review = review_html.find_all("div", {"class" : "detailed-reviews-userReviewsContainer"})
+=> We are taking all the reviews calss in a single variable
+
+for i in review:
+    user_rating = i.findAll("div", {"class" : "user-review-main user-review-showRating"})
+    user_comment = i.findAll("div",{"class" : "user-review-reviewTextWrapper"})
+    user_name = i.findAll("div",{"class" : "user-review-left"})
+=> Then hovering one by one which one we need to access
+
+for i in range(len(user_rating)):
+    rating = user_rating[i].find('span', class_ = 'user-review-starRating').get_text().strip()
+=> Rating is in span class
+=> Rating is available as text
+=> Strip = Used to remove extra spaces
+    comment = user_comment[i].text
+    name = user_name[i].find('span').text => Name is in 1st element of span
+    date = user_name[i].find_all('span')[1].text => Date is in 2nd element of span
+    print(f"Date : {date}, Rating : {rating}, Name : {name}, comment : {comment}")
 
 
+Set Folder Structure:-
 
+__init__.py => Making the folder as a package
+scrapper => Contains all the logic of the scrapping data project
+data_report => Can be used for generating data report
+cloud_io => Cloud related input output, putting data in mongo db
+constants => Contains all constants used across the file
+utils => Helper functions used 
+exceptions => Contains custom exception
+
+
+Exception handling lecture:-
+try and error exception
+use ai to understand
+
+
+Utils and constants:-
+constants => mongo db access modifier
+utils
+from src.cloud_io import MongoIO => We r importing mongo db
+from src.constants import MONGO_DATABASE_NAME => We r importing mongo db database name
+from src.exception import CustomException => We r importing custom exception
+import os, sys
+
+def fetch_product_names_from_cloud(): # From mongo db
+    try:
+        mongo = MongoIO()
+        collection_names = mongo.mongo_ins.	_mongo_operation__connect_database.list_collection_names() => Getting collection names from database
+        return [collection_name.replace('_', ' ') => Replacing underscore with spaces for better usecase
+                for collection_name in collection_names]
+
+    except Exception as e:
+        raise CustomException(e, sys)
+
+
+MongoDB Connection 2:-
+mongo operation => helps us to connect from mongo db
+mongoIO Class => 2 methods = 1 to store and 1 to get reviews
+mongo_ins = None => Class level variable, To establish only once during the running of application
+if mongo db url is none raise exception
+product name is the collection name
 
 
 
