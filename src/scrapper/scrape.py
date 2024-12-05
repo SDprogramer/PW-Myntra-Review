@@ -18,8 +18,8 @@ class ScrapeReviews:
         # options.add_argument("--disable-dev-shm-usage")
         # options.add_argument('--headless')
         
-        # Start a new Edge browser session
-        self.driver = webdriver.Edge(options = options)
+        # Start a new Chrome browser session
+        self.driver = webdriver.Chrome(options = options)
         self.product_name = product_name
         self.no_of_products = no_of_products
 
@@ -118,12 +118,8 @@ class ScrapeReviews:
             )
 
             for i in review:
-                user_rating = i.findAll(
-                    "div", {"class" : "user-review-main user-review-showRating"}
-                )
-                user_comment = i.findAll(
-                    "div", {"class" : "user-review-reviewTextWrapper"}
-                )
+                user_rating = i.findAll("div", {"class" : "user-review-main user-review-showRating"})
+                user_comment = i.findAll("div", {"class" : "user-review-reviewTextWrapper"})
                 user_name = i.findAll("div", {"class" : "user-review-left"})
 
             reviews = []
@@ -181,7 +177,6 @@ class ScrapeReviews:
     
     def skip_products(self, search_string, no_of_products, skip_index):
         product_urls: list = self.scrape_product_urls(search_string, no_of_products + 1)
-
         product_urls.pop(skip_index)
 
     def get_review_data(self) -> pd.DataFrame:
@@ -208,15 +203,12 @@ class ScrapeReviews:
             self.driver.quit()
 
             data = pd.concat(product_details, axis = 0)
-            
             data.to_csv("data.csv", index = False)
             
             return data
             
             # columns = data.columns
-
             # values = [[data.loc[i, col] for col in data.columns ] for i in range(len(data)) ]
-            
             # return columns, values
         
         except Exception as e:
